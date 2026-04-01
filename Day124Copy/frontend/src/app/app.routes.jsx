@@ -15,7 +15,11 @@ export const routes=createBrowserRouter(
         },
         {
             path:"/",
-            element:<Dashboard/>
+            element: (
+                <Protected>
+                    <Dashboard/>
+                </Protected>
+            )
         }
     ]
 )

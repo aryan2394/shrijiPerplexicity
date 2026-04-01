@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import { Navigate } from "react-router";
+import { useSelector } from "react-redux";
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {handleRegister}=useAuth()
   const navigate = useNavigate();
-
+  const user=useSelector(state=>state.auth)
+  const loading=useSelector(state=>state.auth)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -16,7 +19,10 @@ export default function Register() {
     // after successful register → login page
     navigate("/");
   };
-
+  if(!loading && user)
+  {
+    return <Navigate to={"/"} replace/>
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0f0f10] text-[#e4e4e7]">
       

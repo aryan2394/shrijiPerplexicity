@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Link,useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate=useNavigate()
+  const {user}=useSelector(state=>state.auth)
+  const {loading}=useSelector(state=>state.auth)
   const {handleLogin}=useAuth()
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,7 +16,10 @@ export default function Login() {
     await handleLogin({email,password})
     navigate("/")
   };
-
+  if(!loading && user)
+  {
+    return <Navigate to={"/"} replace/>
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0f0f10] text-[#e4e4e7]">
       
