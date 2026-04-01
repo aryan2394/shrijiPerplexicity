@@ -1,0 +1,54 @@
+Tavily kya hai?
+
+Tavily ek tool/service hai jo AI ko internet se real-time, accurate information laane mein help karta hai.
+
+👉 Matlab:
+
+Agar tumhara AI model (jaise GPT ya LangChain agent) ko latest info chahiye — Tavily uske liye search karke clean data deta hai.
+
+⚙️ Tavily kya karta hai?
+
+Tavily mainly ye kaam karta hai:
+
+1. 🌐 Real-time Web Search
+Internet pe search karta hai (Google jaisa)
+Latest data laata hai (news, facts, etc.)
+
+2. 🧠 AI-friendly Results
+Sirf links nahi deta ❌
+Proper summarized answer deta hai ✅
+Taaki LLM easily samajh sake
+
+🧩 Tavily vs Normal Search API
+Feature	Normal Search	Tavily
+Output	Links	Summarized Answer
+AI Friendly	❌	✅
+Clean Data	❌	✅
+Integration	Medium	Easy with AI
+🔗 LangChain mein Tavily
+
+Agar tum LangChain use kar rahe ho, to Tavily ek tool ki tarah use hota hai:
+
+Example (concept):
+
+import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
+
+const tool = new TavilySearchResults({
+  apiKey: "YOUR_API_KEY"
+});
+
+👉 Phir AI agent bol sakta hai:
+
+"Search karo internet pe" → Tavily use hoga
+
+🧠 Simple Example
+
+User poochta hai:
+
+"Latest AI news kya hai?"
+
+Without Tavily ❌
+→ Model guess karega (old knowledge)
+
+With Tavily ✅
+→ Real-time search karega + fresh answer dega

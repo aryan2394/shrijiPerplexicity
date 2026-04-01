@@ -1,0 +1,11 @@
+Data modelling 
+
+saare models ban gaye and ab kya karna haia 
+
+/register route pe {username,email,password} user dega and hum uske data ko db mein save kar denge 
+lekin wo humari abhi kisis bhi featires ko use nahi kar sakta haia 
+becaise abhi wo verified:false hai (usko verify karna oadega using email )
+and token bhi abhi nahi milega 
+
+/login jab user login karega then usko agar verified status :true and then saare given credentails sahi hai then 
+ab wo features use kar sakat haia and can get the token which will help him to get access of the system

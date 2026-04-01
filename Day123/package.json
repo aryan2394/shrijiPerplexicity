@@ -1,0 +1,23 @@
+{
+  "name": "priyapritam",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@langchain/community": "^1.1.25",
+    "@langchain/core": "^1.1.36",
+    "@langchain/mistralai": "^1.0.7",
+    "dotenv": "^17.3.1",
+    "install": "^0.13.0",
+    "langchain": "^1.2.37",
+    "nodemailer": "^8.0.4",
+    "zod": "^4.3.6"
+  }
+}

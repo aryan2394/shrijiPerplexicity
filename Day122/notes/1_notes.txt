@@ -1,0 +1,39 @@
+Generative AI ko simple Hinglish mein samjho 👇
+
+👉 Generative AI ek type ka Artificial Intelligence hai jo naya content create karta hai — jaise text, images, music, code, videos, etc.
+
+🔹 Easy Definition:
+
+Generative AI = AI jo khud se naya data/content generate karta hai
+
+🔹 Example se samjho:
+Tum ChatGPT se puchte ho → “ek story likho”
+👉 wo new story create karta hai → ye Generative AI hai
+Tum bolte ho → “ek image bana do”
+👉 AI new image generate karta hai → ye bhi Generative AI hai
+🔹 Ye kaise kaam karta hai?
+AI ko pehle bohot saara data se train kiya jata hai
+Phir wo patterns samajh leta hai
+Aur us base par new content bana deta hai
+
+
+🔹 Real-life tools:
+ChatGPT → text generate karta hai
+DALL·E / Midjourney → images banate hain
+GitHub Copilot → code likhne mein help karta hai and auto-completion jaise hum likhte hai wo uske aage ka code de deta hai 
+
+
+AI Service Provider kya hota hai?
+
+👉 AI Service Provider wo companies hoti hain jo AI tools, models, aur services provide karti hain — taaki developers aur users easily AI use kar saken.
+
+ye kaise karti hai train
+
+Ek line mein:
+
+👉 “LLM(yahi wo model hai answer deta hai) ko pehle data se train karte hain, phir cloud pe host karke API ke through duniya ko use karne dete hain.”
+
+
+
+
+

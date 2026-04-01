@@ -1,0 +1,51 @@
+Tools kya hote hai (Hinglish me simple)
+
+👉 Tools = extra powers jo AI ko di jaati hain
+
+Normally AI kya karta hai?
+
+Sirf text padhta hai
+Aur text generate karta hai
+
+❌ Wo khud:
+
+Google search nahi kar sakta
+Calculator use nahi kar sakta
+Database access nahi kar sakta
+⚡ Tools ka kaam
+
+👉 Tools AI ko real-world actions karne dete hain:
+
+Tool	AI kya karega
+🔍 Search Tool	Internet pe search karega
+🧮 Calculator Tool	Maths solve karega
+🗄️ Database Tool	Data fetch karega
+🌐 API Tool	External service call karega
+🧠 Example samajh lo
+Without tools ❌
+
+User: “India ki current population kya hai?”
+AI: Guess karega (old data)
+
+With tools ✅
+
+AI:
+
+Decide karega → "mujhe search karna hai"
+Tool use karega → Google/API
+Fresh data laayega
+Accurate answer dega
+🔗 LangChain me tools ka role
+
+👉 LangChain me tools use hote hain AI ko smart banane ke liye
+
+AI + Tools = Agent 🤖
+
+🤖 Agent kya hota hai?
+
+👉 Agent = AI + Decision making + Tools
+
+AI khud decide karta hai:
+
+“Mujhe kaunsa tool use karna hai?”
+“Kab use karna hai?”

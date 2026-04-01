@@ -1,0 +1,19 @@
+Lag raha hai tum AI ka flow samajh rahe ho (jo image mein dikh raha hai). Main simple words mein explain kar deta hoon 👇
+
+📌 Image mein kya ho raha hai:
+User (tum) → “Hi” bhejta hai
+Backend / Server → request ko receive karta hai
+AI Service Provider (ASP) → jaise OpenAI, Gemini etc. ko request bheji jaati hai
+AI Response → “Hello, how can I help you today?” wapas aata hai
+Server → User → final response tumhe dikhta hai
+
+🧠 Simple Flow:
+User → Backend → AI API → Backend → User
+🔥 Important Concept:
+{ role: "user", content: "Hi" } → user ka message
+{ role: "AI", content: "Hello..." } → AI ka response
+
+And jaise backend and database ke beech mein communication ke liye we use the mongoose
+uuSSI TARAH 
+
+Backend and ai service provider(chatgpt,gemeini) se baat karne ke liye we use the langchain
