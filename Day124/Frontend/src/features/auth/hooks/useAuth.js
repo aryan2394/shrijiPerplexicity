@@ -1,17 +1,16 @@
-import { useDispatch } from "react-redux";
-import { register,login,getMe } from "../services/auth.api.js";
-import { setUser,setLoading,setError } from "../auth.slice.js";
-
-export const useAuth=()=>
+import {login,register,getMe} from "../services/auth.service"
+import { useDispatch } from "react-redux"
+import { setError,setLoading,setUser } from "../auth.slice"
+export function useAuth()
 {
-    const dispatch=useDispatch();
+    const dispatch=useDispatch()
     async function handleRegister({username,email,password})
     {
         try {
-            dispatch(setLoading(true));
+            dispatch(setLoading(true))
             const data=await register({username,email,password})
         } catch (error) {
-            dispatch(setError(error.response?.data?.message || "Register failed by shri ji" ))
+            dispatch(setError(error.response?.data?.message || "Register failed by shri ji"))
         }finally{
             dispatch(setLoading(false))
         }
@@ -20,29 +19,27 @@ export const useAuth=()=>
     {
         try {
             dispatch(setLoading(true))
-            const data=await login({email,password})
-            setUser(data.user);
+            const data=await login({email,password});
+            dispatch(setUser(data.user))
         } catch (error) {
             dispatch(setError(error.response?.data?.message || "Login failed by shri ji"))
-        }finally{
+        } finally{
             dispatch(setLoading(false))
         }
     }
-    async function handleGeteMe()
+    async function handleGetMe()
     {
         try {
             dispatch(setLoading(true))
-            const data=await getMe()
-            setUser(data.user)
+            const data=await getMe();
+            dispatch(setUser(data.user))
         } catch (error) {
-            dispatch(setError(error.response?.data?.message || "Failed to fetch user data by shri ji"))
-        }finally{
+            dispatch(setError(error.response?.data?.message || "failed to fetch data by shri ji"))
+        } finally{
             dispatch(setLoading(false))
         }
     }
-    return{
-        handleGeteMe,
-        handleLogin,
-        handleRegister
+    return {
+        handleGetMe,handleRegister,handleLogin
     }
 }

@@ -150,9 +150,13 @@ export async function getMeController(req,res)
     const payload=req.user;
     const user=await userModel.findById(payload.id);
     res.status(200).json({
-        id:user._id,
-        user:user.username,
-        email:user.email
+        message:"user details by shri ji",
+        success:true,
+        user:{
+            id:user._id,
+            username:user.username,
+            email:user.email
+        }
     })
 }
 export async function sendEmailAgain(req,res)

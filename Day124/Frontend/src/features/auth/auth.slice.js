@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
 export const authSlice=createSlice({
     name:"auth",
     initialState:{
         user:null,
-        loading:false,
-        error:null,
+        loading:true,
+        error:null
     },
     reducers:{
         setUser:(state,action)=>
@@ -18,7 +17,7 @@ export const authSlice=createSlice({
         },
         setError:(state,action)=>
         {
-            state.error=action.payload;
+            state.error=action.payload
         }
     }
 })
