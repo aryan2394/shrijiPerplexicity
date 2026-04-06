@@ -1,9 +1,22 @@
 import { Router } from "express";
-import { sendMessage } from "../controllers/chat.controller.js";
 import { authUser } from "../middlewares/auth.middleware.js";
+import { deleteChat, getChats, getMessages, sendMessage } from "../controllers/chat.controller.js";
 const chatRouter=Router();
-// humein ek route banana hai ki agar user kuch bhi questio puche then ai ke paas wo message jaaye then wo response wapas user ko hum reteurn kar de
-// and ye saare routes protecetd haia then only he sholud allow to use the faetues 
-// uske liye we will use the middleware authUser
-chatRouter.post("/message",authUser,sendMessage);
+
+// user can create and follow and continue the chats
+chatRouter.post("/message",authUser,sendMessage)
+
+// user can see all its chat that is created in the database
+chatRouter.get("/",authUser,getChats)
+
+// user can get all the messages of the particular chat
+chatRouter.get("/:chatId/messages",authUser,getMessages)
+
+// user can delete the particular chat and agar chat hi delete ho gayai then uske anadar ke saare message sko bhi delete kardo
+chatRouter.delete("delete/:chatId",authUser,deleteChat);
+
+
+// user can delete the messages of the particular chat
+// ye features humare actual models mein bhi nahi hai 
+chatRouter.delete("/delete/:chatId",authUser,)
 export default chatRouter;

@@ -1,37 +1,40 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatMistralAI } from "@langchain/mistralai";
-import {HumanMessage,SystemMessage} from "langchain"
+import {HumanMessage, SystemMessage,AIMessage} from "langchain"
 const geminiModel = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash-lite",
   apiKey: process.env.GEMINI_API_KEY
 //   for api key go to google ststudio and get the api key from the project cihart-perplexicity
 });
+
 const mistralModel=new ChatMistralAI({
     model:"mistral-small-latest",
     apiKey:process.env.MISTRAL_API_KEY
 })
-export async function testAi()
+// export async function testAi()
+// {
+//     model.invoke("Who is radha rani in hinglish language mein  less than 20 wrrds than give her unki khasiyat")
+//     .then((response)=>
+//     {
+//         console.log(response.text);
+//     })
+// }
+export async function generateResponse(messages)
 {
-    model.invoke("Who is radha rani in hinglish language mein  less than 20 wrrds than give her unki khasiyat")
-    .then((response)=>
-    {
-        console.log(response.text);
-    })
-}
+  // hum kya kar rahe hai ki jo bhi messages aaye hai wo array of messages aaya hai because humne purane saare chat and new human message saare ko feed 
+  // kiya hai ai ko  taaki kabhi user purane chat ko bhi resume kar sakein and usmein continue kar sakein 
+   const response = await geminiModel.invoke(
+        messages.map((msg) => {
+            if (msg.role == "user") {
+                return new HumanMessage(msg.content);
+            } else if (msg.role == "ai") {
+                return new AIMessage(msg.content);
+            }
+        })
+    );
 
-// ye function hai jo tak call hoga jab user koi ai se cheez puchna chahe
-export async function generateResponse(message)
-{
-    // ye message ya query aayi hai user se 
-    const response=await geminiModel.invoke([
-        new HumanMessage(message)
-    ])
     return response.text;
 }
-
-// ye function jo hai title genearete karta hai on the given message provided
-// and humein jab bhi batana hoga ki instruction dena ho then we will use the {SYSTEMMESSAGE } to give the instructions to the AI Ki aise geneatere karna ahai message 
-
 export async function generateChatTitle(message) {
   try {
     const response = await mistralModel.invoke([
@@ -53,3 +56,4 @@ Generate a title for a chat conversation based on the following first message:
     return "New Chat";
   }
 }
+

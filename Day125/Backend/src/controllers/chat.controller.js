@@ -1,53 +1,114 @@
-import { generateChatTitle, generateResponse } from "../services/ai.service.js";
 import chatModel from "../models/chat.model.js";
 import messageModel from "../models/message.model.js";
+import { generateChatTitle, generateResponse} from "../services/ai.service.js";
+
 export async function sendMessage(req,res)
 {
-    const {message}=req.body;
-    console.log(message);
-    // ye jo message jo hai humein AI ko dena haia and wo humeie jo bhi response dega AI wo hum return kar denge user ko
-    // ai ko message mile uske liye hum kya karein humein data ai ko dena padega matlab ki humein serevices mein ai.services.js mein ye question ko usko invoke karna and jo bhi response aayega AI SE WO return kar dega 
+    const { message, chatId } = req.body;
 
+let chat;
 
-    // const result=await generateResponse(message);
-    // res.json({
-    //     aiMessage:result
-    // })
+// ✅ CASE 1: chatId exists → try to find chat
+if (chatId) {
+    chat = await chatModel.findById(chatId);
+}
 
-    // abhi tak humne kya kar diya hai ki jo bhi user query karein hum usko ai se response bhej rahe hai
-    // lekin agar aap kabhi bhi chatGpt se pahle message karte ho next text(new chat) ke saath toh wo humein ek title bhi deti hai and wo hum usko apne se nahi dete balki wo pahle mssage ki hisab se khud hi generate karti hai
-    // toh ab huemin wo title geneate karna ab with the help of AI
-    // WE WILL NOT USE the gemini model for genrating the title becuse gemini is a heavy model and choti choti cheezon ke liye hum utne bade model use nahi karte therfore crwete the mistarlAi for small things
-    // Mistaral AI IS a samll model toh wo response bhi jaldi deta haia and gemini thoda late karata hai 
-    
-    // toh these is a titlebease on the frist message 
-    const title=await generateChatTitle(message);
-    const response=await generateResponse(message);
-    console.log(title);
+// ❗ Agar chatId nahi mila ya exist nahi karta → new chat create
+if (!chat) {
+    const title = await generateChatTitle(message);
 
-
-    // res.json({
-    //     AIMessage:response,
-    //     title
-    // })
-
-        // ab humare paas title,user and AI response sab aa gaya hai toh jo humne chatModel and messageModel tha usko craete kar sakte haia 
-    // becasuse uske liye humein chahiye thi title and user of the chat toh hum chatModel bana sakte hai 
-    // and message modele because humare paas content hai and role (bhi ata haia mi ai ka haia ) and chat bhi presnet haia therfore we can craet the messageModel to store all the message of the chat
-
-    const chat=await chatModel.create({
-        user:req.user._id,
-        title:title
-    })
-    const aiMessage=await messageModel.create({
-        content:response,
-        chat_id:chat._id,
-        role:"ai"
-    })
-    res.json({
-        message:response,
+    chat = await chatModel.create({
         title,
-        chat,
-        aiMessage
+        user: req.user.id
+    });
+}
+
+// ✅ Save user message
+await messageModel.create({
+    chat: chat._id,
+    content: message,
+    role: "user"
+});
+
+// ✅ Get full conversation
+const messages = await messageModel.find({ chat: chat._id }).sort({ createdAt: 1 });
+
+// ✅ Generate AI response
+const result = await generateResponse(messages);
+
+// ✅ Save AI message
+const aiMessage = await messageModel.create({
+    chat: chat._id,
+    content: result,
+    role: "ai"
+});
+
+res.status(200).json({
+    success: true,
+    chatId: chat._id, // ⚡ IMPORTANT (frontend ko bhejo)
+    result,
+    aiMessage
+});
+}
+
+// user ki jitni bhi chats hai wo sab chats ko return karo 
+export async function getChats(req,res)
+{
+    const user=req.user;
+    const chats=await chatModel.find({user:user.id});
+    res.status(200).json({
+        success:true,
+        message:"get all the chats successfully by shri ji",
+        chats
+    })
+}
+
+// ek chats ke saare messages of the user
+
+export async function getMessages(req,res)
+{
+    const {chatId}=req.params;
+    // check ki jo chatId hai aisa toh nahi hai ki koi aur user kisis chat ke saare messages dekhna cha raha hai 
+    const chat=await chatModel.findById(chatId);
+    if(!chat)
+    {
+        return res.status(404).json({
+            message:"chat not found by shri ji"
+        })
+    }
+    if(chat.user!=req.user.id)
+    {
+        return res.status(401).json({
+            success:false,
+            message:"unauthorized user to see the chat by shri ji "
+        })
+    }
+    console.log(chat,req.user);
+    const messages=await messageModel.find({chat:chatId});
+    res.status(200).json({
+        success:true,
+        messages
+    })
+}
+
+// ek chats ko delete karna
+export async function deleteChat(req,res)
+{
+    const {chatId}=req.params;
+    const chat=await chatModel.findById(chatId);
+    if(!chat)
+    {
+        return res.status(404).json({
+            success:false,
+            messages:"no chat available by shri ji"
+        })
+    }
+    const deleteChat=await chatModel.findByIdAndDelete(chatId);
+    const messageDeleteChat=await messageModel.findOneAndDelete({
+        chat:chatId
+    })
+    res.status(200).json({
+        success:true,
+        message:"deleted the chats and all related messages by shri ji"
     })
 }
