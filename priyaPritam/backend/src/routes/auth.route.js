@@ -1,0 +1,12 @@
+import { Router } from "express";
+import { getMe, login, register, sendEmailAgain, verifyEmail } from "../controllers/auth.controller.js";
+import { loginValidate, registerValidation } from "../validators/auth.validator.js";
+import { validator } from "../middlewares/error.validator.js";
+import { authUser } from "../middlewares/auth.middleware.js";
+const authRouter=Router();
+authRouter.post("/register",registerValidation,validator,register);
+authRouter.get("/verify-email",verifyEmail);
+authRouter.post("/login",loginValidate,validator,login);
+authRouter.get("/get-me",authUser,getMe);
+authRouter.post("/resend-email",sendEmailAgain);
+export default authRouter;

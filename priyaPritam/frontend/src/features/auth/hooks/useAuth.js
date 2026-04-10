@@ -1,0 +1,45 @@
+import { login,register,getMe } from "../services/auth.service";
+import { setError,setLoading,setUser } from "../auth.slice";
+import { useDispatch } from "react-redux";
+export function useAuth()
+{
+    const dispatch=useDispatch()
+    async function handleRegister({username,email,password})
+    {
+        try {
+            dispatch(setLoading(true))
+            const data=await register({username,email,password})
+        } catch (error) {
+            dispatch(setError(error.response?.data?.message || "Register failed by shri ji"))
+        }finally{
+            dispatch(setLoading(false))
+        }
+    }
+    async function handleLogin({email,password})
+    {
+        try {
+            dispatch(setLoading(true))
+            const data=await login({email,password});
+            dispatch(setUser(data.user))
+        } catch (error) {
+            dispatch(setError(error.response?.data?.message || "Login failed by shri ji"))
+        } finally{
+            dispatch(setLoading(false))
+        }
+    }
+    async function handleGetMe()
+    {
+        try {
+            dispatch(setLoading(true))
+            const data=await getMe();
+            dispatch(setUser(data.user))
+        } catch (error) {
+            dispatch(setError(error.response?.data?.message || "failed to fetch data by shri ji"))
+        } finally{
+            dispatch(setLoading(false))
+        }
+    }
+    return {
+        handleGetMe,handleRegister,handleLogin
+    }
+}
